@@ -20,7 +20,7 @@ def scrape():
     news_title = soup.find("div", class_="content_title").text
     news_p = soup.find("div", class_="article_teaser_body").text
     news_date = soup.find("div", class_="list_date").text
-    print(f"The newest article is titled '{news_title}'.  The content is '{news_p}'.  It was published on {news_date}.")
+    
 
     #time to navigate and find the featured image url
     image_url = "https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars"
@@ -35,8 +35,9 @@ def scrape():
     browser.find_by_css("div.carousel_container div.carousel_items a.button").first.click()
 
     #find the image url
-    img_url = browser.find_by_css("div#fancybox-lock img")
-
+    img_url = browser.find_by_css("div.fancybox-inner img")
+    img_url = img_url["src"]
+    print(img_url)
     #now go to the official twitter page
     twitter_url = "https://mobile.twitter.com/marswxreport?lang=en"
     browser.visit(twitter_url)
@@ -94,17 +95,18 @@ def scrape():
         soup = bs(html, 'html.parser')
         partial = soup.find("img", class_="wide-image")["src"]
         img_title = soup.find("h2",class_="title").text
-        img_url = 'https://astrogeology.usgs.gov'+ partial
-        dictionary={"title":img_title,"img_url":img_url}
+        hemi_img_url = 'https://astrogeology.usgs.gov'+ partial
+        dictionary={"title":img_title,"img_url":hemi_img_url}
         mars_hemis.append(dictionary)
     
     completed_dict = {
         "newest_title" : news_title,
         "newest_text" : news_p,
         "newest_date" : news_date,
+        "img_url_found" : img_url,
         "latest_weather" : latest_weather_tweet,
         "fact_table" : html_table,
-        "mars_hemis" : mars_hemis
+        "mars_hemis" : mars_hemis,
     }
     return completed_dict
 
