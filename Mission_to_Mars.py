@@ -98,6 +98,7 @@ def scrape():
         hemi_img_url = 'https://astrogeology.usgs.gov'+ partial
         dictionary={"title":img_title,"img_url":hemi_img_url}
         mars_hemis.append(dictionary)
+        browser.back()
     
     completed_dict = {
         "newest_title" : news_title,
