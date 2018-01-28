@@ -19,8 +19,10 @@ def home():
 @app.route("/scrape")
 def scrape_data():
     data = Mission_to_Mars.scrape()
+    db.collection.remove({})
     db.collection.insert_one(data)
-    return "Scraped"
+    return redirect('http://127.0.0.1:5000/')
+
 
 if __name__ == "__main__":
     app.run(debug=True)
