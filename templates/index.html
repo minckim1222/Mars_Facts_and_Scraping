@@ -5,8 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Mar's Facts</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1>{{ data[0] }}</h1>
+    <div class="container-fluid">
+        <div class="jumbotron">
+            <h1 class="text-center">Welcome to Mars Facts!</h1>
+            <p class="text-center">This page displays the newest Mars related information.</p>
+            <p class="text-center"><a class="btn btn-primary btn-lg" href="http://127.0.0.1:5000/scrape" role="button">Scrape for new facts</a></p>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-l-12">
+                <h1>Latest Mars News</h1>
+                <h3>{{ data[0].newest_title }}, published on {{ data[0].newest_date }}.</h3>
+                <p>{{ data[0].newest_text }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <h2>Featured Photo of Mars</h2>
+                <img src={{ data[0].img_url_found}} alt="Newest Mars Image" height=75% width =75%>
+            </div>
+            <div class="col-md-4">
+                <div class="row"> 
+                    <h2>The latest weather on Mars:</h2>
+                    <p> {{ data[0].latest_weather }}</p>
+                </div>
+                <div class="row">
+                    {% block content %}
+                    <h1>Some facts about Mars</h1>
+                    {{data[0].fact_table | safe}}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <h3 class="text-center">Mars Hemisphere Photos</h3>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-md-6 text-center"> 
+                <img src={{ data[0].mars_hemis[0].img_url }} alt="Cerberus" height =75% width = 75%>
+                <div class="caption text-center">
+                    <h3>Cerberus Hemisphere</h3>
+                </div>    
+            </div>
+            <div class="col-sm-6 col-mg-6 text-center">
+                <img src="{{ data[0].mars_hemis[1].img_url }} " alt="Schiaparelli Hemisphere" height =75% width = 75%>
+                <div class="caption text-center">
+                    <h3>Schiaparelli Hemisphere</h3>
+                </div>     
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-md-6 text-center"> 
+                <img src={{ data[0].mars_hemis[2].img_url }} alt="Syrtis Major" height =75% width = 75%>
+                <div class="caption text-center">
+                    <h3>Syrtis Major</h3>
+                </div>    
+            </div>
+            <div class="col-sm-6 col-mg-6 text-center">
+                <img src="{{ data[0].mars_hemis[3].img_url }} " alt="Valles Marineris" height =75% width = 75%>
+                <div class="caption text-center">
+                    <h3>Valles Marineris</h3>
+                </div>     
+            </div>
+        </div>
+    </div>
 </body>
 </html>
